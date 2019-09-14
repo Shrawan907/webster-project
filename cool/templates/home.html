@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+
+{% load staticfiles %}  <!-- it loads static files -->
+
+<div class="containor-fluid">
+
+<img src="{% static '625.gif' %}" height=100% width=100%/>      <!-- from static files -->
+<img src="{% static 'webster2.jpg' %}" height=100% width=100%/>  
+</div>
+
+{% endblock %}
