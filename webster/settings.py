@@ -73,10 +73,16 @@ WSGI_APPLICATION = 'webster.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+
+# here we use postgres for our database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'websterdb',
+        'USER': 'postgres',
+        'PASSWORD': '9460202698',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
