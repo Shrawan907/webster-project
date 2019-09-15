@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Cool
 from django.utils import timezone 
 
 def home(request):
-    return render(request, 'home.html')         # take us to home page
+    reads = Cool.objects
+    return render(request, 'home.html',{'reads': reads})         # take us to home page
 
-@login_required # i.e create page only shown when a user is login
+@login_required(login_url="/accounts/signup") # i.e create page only shown when a user is login
 def create(request):
     if request.method == 'POST':        
         if request.POST['title'] and request.POST['body'] and request.POST['url'] and request.FILES['icon'] and request.FILES['image']:
@@ -22,8 +23,20 @@ def create(request):
             cools.pub_date = timezone.datetime.now()
             cools.hunter = request.user                 # hunter is set to current user
             cools.save()                                # it saves all
-            return redirect('home')             # at this moment redirect to home
+            return redirect('/cool/' + str(cools.id))             # at this moment redirect to home
         else:
             return render(request, 'create.html',{'error': 'All fields required!'})
     else:
         return render(request, 'create.html')
+
+def detail(request, cools_id):          # it give details of each user eith specific id
+    cools = get_object_or_404(Cool, pk=cools_id)
+    return render(request, 'detail.html',{'cools': cools})
+
+@login_required(login_url="/accounts/signup")
+def upvote(request, cools_id):
+    if request.method == "POST":
+        cools = get_object_or_404(Cool, pk=cools_id)
+        cools.votes_total += 1
+        cools.save()
+        return redirect('/cool/' + str(cools.id))

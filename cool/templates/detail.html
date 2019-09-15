@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+
+<div class="row">
+    <div class="col-2">
+        <br>
+        <img src="{{ cools.icon.url}}" class="image-fluid" height=80 />
+    </div>
+   
+       
+    <div class="col-10">
+        <a href="{{ cools.url }}"><h1>{{cools.title }}</h1></a>
+    </div>
+    
+</div>
+
+<div class="row ">
+        <div class="col-8 pb-3">
+            <br>
+            <img src="{{ cools.image.url}}" class="image-fluid" height="400" width="710" />
+        </div>
+       
+           
+        <div class="col-3">
+            <br>
+            <a href="javascript:{document.getElementById('back').submit()}"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> UPvote{{cools.votes_total}}</button></a>
+        </div>
+        
+</div>
+
+
+<div class="row">
+        <div class="col-4">
+            
+            <h4>Hunted By {{cools.hunter.username}}</h4>
+        </div>
+       
+           
+        <div class="col-4 text-right">
+                <h4><span class="oi oi-clock"></span> {{ cools.pub_date_pretty}} </h4>
+        </div>
+   
+
+</div>    
+
+<div class="row">
+            <div class="col-8">
+                
+                <p>{{cools.body}}</p>
+            </div>
+</div>
+        
+<form id="back" method="POST" action="{% url 'upvote' cools.id %}">
+    {% csrf_token %}
+    <input type="hidden">
+</form>
+
+</div>
+{% endblock %}

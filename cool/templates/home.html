@@ -4,10 +4,52 @@
 
 {% load staticfiles %}  <!-- it loads static files -->
 
-<div class="containor-fluid">
+    <div class="container-fluid">
 
-<img src="{% static '625.gif' %}" height=100% width=100%/>      <!-- from static files -->
-<img src="{% static 'webster2.jpg' %}" height=100% width=100%/>  
-</div>
+        <img src="{% static '625.gif' %}" height=100% width=100%/>      <!-- from static files -->
 
+    </div>
+
+    <br><br>
+
+    <iframe width="300" height="154" src="https://w2.countingdownto.com/2637808" frameborder="0"></iframe>
+
+        <div class="container">
+            {% for read in reads.all %}
+
+            <div class="row pb-3">
+
+                <div class="col-3" onclick="window.location='{% url 'detail' read.id %}';" style="cursor: pointer;">
+                    <img class="img-fluid" src="{{ read.icon.url }}"  height=100 width=200/>
+                </div> 
+
+                <div class="col-6" onclick="window.location='{% url 'detail' read.id %}';" style="cursor: pointer;">
+                    <h2>{{read.title}}</h2>
+                    <p>{{read.summary}}</p>
+                </div>
+
+                <div class="col-2">
+                    <br>
+                    <a href="javascript:{document.getElementById('grow{{ read.id }}').submit() }"><button class="btn btn-primary btn-lg btn-block"><span class="oi oi-caret-top"></span> UPvote{{read.votes_total}}</button></a>
+                </div>
+
+            </div>
+
+
+            <form id="grow{{read.id}}" method="POST" action="{% url 'upvote' read.id %}" >
+                    {% csrf_token %}
+                    <input type="hidden">
+            </form>
+            
+            {% endfor %}
+        
+        </div>
+
+    <div class="container text-center">
+        <a href="">Back to top</a>
+    </div>
 {% endblock %}
+
+
+
+

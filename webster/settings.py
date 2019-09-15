@@ -56,7 +56,7 @@ ROOT_URLCONF = 'webster.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['webster/templates'],      # templates directory
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,7 +128,7 @@ USE_TZ = True
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'producthunt/static/')         # for static folder added
+    os.path.join(BASE_DIR, 'webster/static/')         # for static folder added
     
 ]
 
